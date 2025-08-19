@@ -13,7 +13,10 @@
   <properties>
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
+
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <thymeleaf.version>3.1.2.RELEASE</thymeleaf.version>
   </properties>
 
   <dependencyManagement>
@@ -41,6 +44,18 @@
       <artifactId>jakarta.servlet-api</artifactId>
       <version>6.1.0</version>
       <scope>provided</scope>
+    </dependency>
+
+    <!-- Template engine -->
+    <dependency>
+      <groupId>org.thymeleaf</groupId>
+      <artifactId>thymeleaf</artifactId>
+      <version>${thymeleaf.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.thymeleaf</groupId>
+      <artifactId>thymeleaf-spring6</artifactId>
+      <version>${thymeleaf.version}</version>
     </dependency>
 
     <!-- Database -->
