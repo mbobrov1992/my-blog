@@ -1,4 +1,4 @@
-package ru.yandex;
+package ru.yandex.my.blog;
 
 import org.springframework.context.annotation.ComponentScan;
 
