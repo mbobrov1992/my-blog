@@ -19,4 +19,10 @@ public class PostService {
         return postRepository.findAllByTagsContaining(tag, pageable)
                 .map(postMapper::toDto);
     }
+
+    public PostDto getPost(Long id) {
+        return postRepository.findById(id)
+                .map(postMapper::toDto)
+                .orElseThrow();
+    }
 }

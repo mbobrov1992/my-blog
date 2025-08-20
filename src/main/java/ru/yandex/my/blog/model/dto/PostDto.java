@@ -23,4 +23,8 @@ public record PostDto(
 
         return text.substring(0, maxLength + 1) + "...";
     }
+
+    public String[] getTextParts() {
+        return text.split("\\r?\\n\\r?\\n");
+    }
 }
