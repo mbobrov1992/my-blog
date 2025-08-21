@@ -69,6 +69,18 @@ public class PostController {
         return "add-post";
     }
 
+    @GetMapping(path = "/posts/{id}/edit")
+    public String getEditPost(
+            Model model,
+            @PathVariable(name = "id") Long id
+    ) {
+        PostDto post = postService.getPost(id);
+
+        model.addAttribute("post", post);
+
+        return "add-post";
+    }
+
     @PostMapping(path = "/posts", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String addPost(
             @ModelAttribute PostRequestDto request,
