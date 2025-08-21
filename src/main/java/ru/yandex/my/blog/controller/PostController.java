@@ -82,4 +82,16 @@ public class PostController {
 
         return "redirect:/posts/" + post.id();
     }
+
+    @PostMapping(path = "/posts/{id}/like")
+    public String like(
+            @PathVariable(name = "id") Long id,
+            @RequestParam(value = "like") boolean isLike
+    ) {
+        log.info("{} post with id: {}", isLike ? "Liked" : "Disliked", id);
+
+        postService.like(id, isLike);
+
+        return "redirect:/posts/" + id;
+    }
 }

@@ -67,7 +67,7 @@
                     <img height="300" th:src="@{'/images/'+${post.id()}}">
                 </p>
                 <p>
-                    <form th:action="${'/posts/'+post.id()+'/like'}" method="post">
+                    <form th:action="@{'/posts/'+${post.id()}+'/like'}" method="post">
                         <button name="like" value="true">&#x1F44D;</button>
                         <span th:text="${post.likes().size()}"></span>
                         <button name="like" value="false">&#128078;</button>

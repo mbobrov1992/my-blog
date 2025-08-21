@@ -7,14 +7,19 @@ import org.springframework.stereotype.Service;
 import ru.yandex.my.blog.mapper.PostMapper;
 import ru.yandex.my.blog.model.dto.PostDto;
 import ru.yandex.my.blog.model.dto.PostRequestDto;
+import ru.yandex.my.blog.model.entity.LikeEnt;
 import ru.yandex.my.blog.model.entity.PostEnt;
+import ru.yandex.my.blog.repository.LikeRepository;
 import ru.yandex.my.blog.repository.PostRepository;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class PostService {
 
     private final PostRepository postRepository;
+    private final LikeRepository likeRepository;
     private final PostMapper postMapper;
     private final FileService fileService;
 
@@ -47,5 +52,23 @@ public class PostService {
         postEnt = postRepository.save(postEnt);
 
         return postMapper.toDto(postEnt);
+    }
+
+    public void like(Long id, boolean isLike) {
+        PostEnt postEnt = postRepository.findById(id)
+                .orElseThrow();
+
+        if (isLike) {
+            LikeEnt like = new LikeEnt();
+            like.setPost(postEnt);
+            likeRepository.save(like);
+        } else {
+            List<LikeEnt> likes = postEnt.getLikes();
+
+            if (!likes.isEmpty()) {
+                LikeEnt like = likes.getFirst();
+                likeRepository.delete(like);
+            }
+        }
     }
 }
