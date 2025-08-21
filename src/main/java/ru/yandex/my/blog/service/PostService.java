@@ -72,6 +72,10 @@ public class PostService {
         return postMapper.toDto(postEnt);
     }
 
+    public void deletePost(Long id) {
+        postRepository.deleteById(id);
+    }
+
     public void like(Long id, boolean isLike) {
         PostEnt postEnt = postRepository.findById(id)
                 .orElseThrow();
