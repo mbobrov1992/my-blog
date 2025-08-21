@@ -1,15 +1,19 @@
 package ru.yandex.my.blog.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.my.blog.model.dto.PostDto;
+import ru.yandex.my.blog.model.dto.PostRequestDto;
 import ru.yandex.my.blog.service.PostService;
 
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping
 @Controller
@@ -54,5 +58,19 @@ public class PostController {
     @GetMapping("/posts/add")
     public String getAddPost() {
         return "add-post";
+    }
+
+    @PostMapping(path = "/posts", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String addPost(
+            @ModelAttribute PostRequestDto request,
+            Model model
+    ) {
+        log.info("Post creation request received: {}", request);
+
+        PostDto post = postService.addPost(request);
+
+        model.addAttribute("post", post);
+
+        return "redirect:/posts/" + post.id();
     }
 }

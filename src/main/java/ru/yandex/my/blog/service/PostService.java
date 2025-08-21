@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.yandex.my.blog.mapper.PostMapper;
 import ru.yandex.my.blog.model.dto.PostDto;
+import ru.yandex.my.blog.model.dto.PostRequestDto;
+import ru.yandex.my.blog.model.entity.PostEnt;
 import ru.yandex.my.blog.repository.PostRepository;
 
 @RequiredArgsConstructor
@@ -14,6 +16,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final PostMapper postMapper;
+    private final FileService fileService;
 
     public Page<PostDto> getPosts(String tag, Pageable pageable) {
         return postRepository.findAllByTagsContaining(tag, pageable)
@@ -24,5 +27,17 @@ public class PostService {
         return postRepository.findById(id)
                 .map(postMapper::toDto)
                 .orElseThrow();
+    }
+
+    public PostDto addPost(PostRequestDto request) {
+        if (request.image() != null) {
+            fileService.save(request.image());
+        }
+
+        PostEnt postEnt = postMapper.toEntity(request);
+
+        postEnt = postRepository.save(postEnt);
+
+        return postMapper.toDto(postEnt);
     }
 }

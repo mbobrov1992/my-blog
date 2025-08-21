@@ -2,6 +2,7 @@ package ru.yandex.my.blog.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -19,6 +20,7 @@ public class LikeEnt {
     @JoinColumn(name = "post_id")
     private PostEnt post;
 
-    @Column(name = "created_at")
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 }

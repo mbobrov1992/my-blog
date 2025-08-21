@@ -2,17 +2,22 @@ package ru.yandex.my.blog.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "posts")
 public class PostEnt {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 
@@ -28,9 +33,11 @@ public class PostEnt {
     @Column(name = "tags")
     private String tags;
 
-    @Column(name = "created_at")
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 

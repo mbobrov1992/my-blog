@@ -3,6 +3,7 @@ package ru.yandex.my.blog.mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.yandex.my.blog.model.dto.PostDto;
+import ru.yandex.my.blog.model.dto.PostRequestDto;
 import ru.yandex.my.blog.model.entity.PostEnt;
 
 import java.util.Arrays;
@@ -13,6 +14,20 @@ public class PostMapper {
 
     private final LikeMapper likeMapper;
     private final CommentMapper commentMapper;
+
+    public PostEnt toEntity(PostRequestDto dto) {
+        PostEnt entity = new PostEnt();
+
+        entity.setTitle(dto.title());
+        entity.setText(dto.text());
+        entity.setTags(dto.tags());
+
+        if (dto.image() != null) {
+            entity.setImageName(dto.image().getOriginalFilename());
+        }
+
+        return entity;
+    }
 
     public PostDto toDto(PostEnt entity) {
         return new PostDto(
