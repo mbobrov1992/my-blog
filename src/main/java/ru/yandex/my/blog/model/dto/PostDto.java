@@ -27,4 +27,8 @@ public record PostDto(
     public String[] getTextParts() {
         return text.split("\\r?\\n\\r?\\n");
     }
+
+    public String getTagsAsText() {
+        return String.join(", ", tags);
+    }
 }
