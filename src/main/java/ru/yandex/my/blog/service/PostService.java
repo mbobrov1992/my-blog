@@ -29,6 +29,14 @@ public class PostService {
                 .orElseThrow();
     }
 
+    public byte[] getImage(Long id) {
+        String fileName = postRepository.findById(id)
+                .orElseThrow()
+                .getImageName();
+
+        return fileName == null ? null : fileService.get(fileName);
+    }
+
     public PostDto addPost(PostRequestDto request) {
         if (request.image() != null) {
             fileService.save(request.image());

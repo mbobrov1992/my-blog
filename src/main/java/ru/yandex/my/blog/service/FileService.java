@@ -42,4 +42,14 @@ public class FileService {
             throw new IllegalStateException("Unable to save file to disk", e);
         }
     }
+
+    public byte[] get(String fileName) {
+        Path path = Paths.get(fileUploadDir, fileName);
+
+        try {
+            return Files.readAllBytes(path);
+        } catch (IOException e) {
+            throw new IllegalStateException("Unable to get file from disk", e);
+        }
+    }
 }
