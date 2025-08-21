@@ -114,13 +114,50 @@ public class PostController {
     }
 
     @PostMapping(path = "/posts/{id}/like")
-    public String like(
+    public String likePost(
             @PathVariable(name = "id") Long id,
-            @RequestParam(value = "like") boolean isLike
+            @RequestParam(name = "like") boolean isLike
     ) {
         log.info("{} post with id: {}", isLike ? "Liked" : "Disliked", id);
 
-        postService.like(id, isLike);
+        postService.likePost(id, isLike);
+
+        return "redirect:/posts/" + id;
+    }
+
+    @PostMapping(path = "/posts/{id}/comments")
+    public String addComment(
+            @PathVariable(name = "id") Long id,
+            @RequestParam(name = "text") String text
+    ) {
+        log.info("Adding comment for post with id: {}", id);
+
+        postService.addComment(id, text);
+
+        return "redirect:/posts/" + id;
+    }
+
+    @PostMapping(path = "/posts/{id}/comments/{commentId}")
+    public String editComment(
+            @PathVariable(name = "id") Long id,
+            @PathVariable(name = "commentId") Long commentId,
+            @RequestParam(name = "text") String text
+    ) {
+        log.info("Editing comment for post with id: {}", id);
+
+        postService.editComment(commentId, text);
+
+        return "redirect:/posts/" + id;
+    }
+
+    @PostMapping(path = "/posts/{id}/comments/{commentId}/delete")
+    public String deleteComment(
+            @PathVariable(name = "id") Long id,
+            @PathVariable(name = "commentId") Long commentId
+    ) {
+        log.info("Deleting comment for post with id: {}", id);
+
+        postService.deleteComment(commentId);
 
         return "redirect:/posts/" + id;
     }

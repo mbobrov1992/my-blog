@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 import ru.yandex.my.blog.mapper.PostMapper;
 import ru.yandex.my.blog.model.dto.PostDto;
 import ru.yandex.my.blog.model.dto.PostRequestDto;
+import ru.yandex.my.blog.model.entity.CommentEnt;
 import ru.yandex.my.blog.model.entity.LikeEnt;
 import ru.yandex.my.blog.model.entity.PostEnt;
+import ru.yandex.my.blog.repository.CommentRepository;
 import ru.yandex.my.blog.repository.LikeRepository;
 import ru.yandex.my.blog.repository.PostRepository;
 
@@ -20,6 +22,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final LikeRepository likeRepository;
+    private final CommentRepository commentRepository;
     private final PostMapper postMapper;
     private final FileService fileService;
 
@@ -76,7 +79,7 @@ public class PostService {
         postRepository.deleteById(id);
     }
 
-    public void like(Long id, boolean isLike) {
+    public void likePost(Long id, boolean isLike) {
         PostEnt postEnt = postRepository.findById(id)
                 .orElseThrow();
 
@@ -92,5 +95,29 @@ public class PostService {
                 likeRepository.delete(like);
             }
         }
+    }
+
+    public void addComment(Long postId, String text) {
+        PostEnt postEnt = postRepository.findById(postId)
+                .orElseThrow();
+
+        CommentEnt commentEnt = new CommentEnt();
+        commentEnt.setPost(postEnt);
+        commentEnt.setText(text);
+
+        commentRepository.save(commentEnt);
+    }
+
+    public void editComment(Long commentId, String text) {
+        CommentEnt commentEnt = commentRepository.findById(commentId)
+                .orElseThrow();
+
+        commentEnt.setText(text);
+
+        commentRepository.save(commentEnt);
+    }
+
+    public void deleteComment(Long commentId) {
+        commentRepository.deleteById(commentId);
     }
 }
