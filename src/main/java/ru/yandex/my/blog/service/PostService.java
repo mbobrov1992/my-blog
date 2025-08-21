@@ -43,11 +43,29 @@ public class PostService {
     }
 
     public PostDto addPost(PostRequestDto request) {
-        if (request.image() != null) {
+        if (request.image() != null && !request.image().isEmpty()) {
             fileService.save(request.image());
         }
 
         PostEnt postEnt = postMapper.toEntity(request);
+
+        postEnt = postRepository.save(postEnt);
+
+        return postMapper.toDto(postEnt);
+    }
+
+    public PostDto editPost(Long id, PostRequestDto request) {
+        PostEnt postEnt = postRepository.findById(id)
+                .orElseThrow();
+
+        if (request.image() != null && !request.image().isEmpty()) {
+            fileService.save(request.image());
+            postEnt.setImageName(request.image().getOriginalFilename());
+        }
+
+        postEnt.setTitle(request.title());
+        postEnt.setText(request.text());
+        postEnt.setTags(request.tags());
 
         postEnt = postRepository.save(postEnt);
 

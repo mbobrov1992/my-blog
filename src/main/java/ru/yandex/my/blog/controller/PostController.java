@@ -83,14 +83,23 @@ public class PostController {
 
     @PostMapping(path = "/posts", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String addPost(
-            @ModelAttribute PostRequestDto request,
-            Model model
+            @ModelAttribute PostRequestDto request
     ) {
         log.info("Post creation request received: {}", request);
 
         PostDto post = postService.addPost(request);
 
-        model.addAttribute("post", post);
+        return "redirect:/posts/" + post.id();
+    }
+
+    @PostMapping(path = "/posts/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String editPost(
+            @ModelAttribute PostRequestDto request,
+            @PathVariable(name = "id") Long id
+    ) {
+        log.info("Post id {} edit request received: {}", id, request);
+
+        PostDto post = postService.editPost(id, request);
 
         return "redirect:/posts/" + post.id();
     }
