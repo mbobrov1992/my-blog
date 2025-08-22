@@ -41,6 +41,7 @@ public class PostEnt {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @OrderBy("id ASC")
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CommentEnt> comments = new ArrayList<>();
 
