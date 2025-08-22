@@ -10,4 +10,6 @@ import ru.yandex.my.blog.model.entity.PostEnt;
 public interface PostRepository extends JpaRepository<PostEnt, Long> {
 
     Page<PostEnt> findAllByTagsContaining(String tag, Pageable pageable);
+
+    boolean existsByImageName(String imageName);
 }

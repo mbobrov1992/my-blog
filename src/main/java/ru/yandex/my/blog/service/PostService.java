@@ -76,7 +76,16 @@ public class PostService {
     }
 
     public void deletePost(Long id) {
-        postRepository.deleteById(id);
+        PostEnt postEnt = postRepository.findById(id)
+                .orElseThrow();
+
+        postRepository.delete(postEnt);
+
+        if (postEnt.getImageName() != null
+                && !postEnt.getImageName().isEmpty()
+                && !postRepository.existsByImageName(postEnt.getImageName())) {
+            fileService.delete(postEnt.getImageName());
+        }
     }
 
     public void likePost(Long id, boolean isLike) {

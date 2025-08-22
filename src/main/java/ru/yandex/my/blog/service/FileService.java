@@ -44,12 +44,27 @@ public class FileService {
     }
 
     public byte[] get(String fileName) {
+        log.info("Reading from disk file with name: {}", fileName);
+
         Path path = Paths.get(fileUploadDir, fileName);
 
         try {
             return Files.readAllBytes(path);
         } catch (IOException e) {
             throw new IllegalStateException("Unable to get file from disk", e);
+        }
+    }
+
+    public void delete(String fileName) {
+        log.info("Deleting from disk file with name: {}", fileName);
+
+        Path path = Paths.get(fileUploadDir, fileName);
+
+        try {
+            Files.deleteIfExists(path);
+            log.info("File deleted successfully: {}", fileName);
+        } catch (IOException e) {
+            throw new IllegalStateException("Unable to delete file from disk", e);
         }
     }
 }
