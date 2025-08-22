@@ -1,7 +1,6 @@
 package ru.yandex.my.blog.controller;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +15,6 @@ import ru.yandex.my.blog.model.dto.PostDto;
 import ru.yandex.my.blog.model.dto.PostRequestDto;
 import ru.yandex.my.blog.service.PostService;
 
-@Slf4j
 @RequiredArgsConstructor
 @RequestMapping
 @Controller
@@ -88,8 +86,6 @@ public class PostController {
     public String addPost(
             @ModelAttribute PostRequestDto request
     ) {
-        log.info("Post creation request received: {}", request);
-
         PostDto post = postService.addPost(request);
 
         return "redirect:/posts/" + post.id();
@@ -100,8 +96,6 @@ public class PostController {
             @ModelAttribute PostRequestDto request,
             @PathVariable(name = "id") Long id
     ) {
-        log.info("Post id {} edit request received: {}", id, request);
-
         PostDto post = postService.editPost(id, request);
 
         return "redirect:/posts/" + post.id();
@@ -109,8 +103,6 @@ public class PostController {
 
     @PostMapping(path = "/posts/{id}/delete")
     public String deletePost(@PathVariable(name = "id") Long id) {
-        log.info("Post id {} delete request received", id);
-
         postService.deletePost(id);
 
         return "redirect:/posts";
@@ -121,8 +113,6 @@ public class PostController {
             @PathVariable(name = "id") Long id,
             @RequestParam(name = "like") boolean isLike
     ) {
-        log.info("{} post with id: {}", isLike ? "Liked" : "Disliked", id);
-
         postService.likePost(id, isLike);
 
         return "redirect:/posts/" + id;
@@ -133,8 +123,6 @@ public class PostController {
             @PathVariable(name = "id") Long id,
             @RequestParam(name = "text") String text
     ) {
-        log.info("Adding comment for post with id: {}", id);
-
         postService.addComment(id, text);
 
         return "redirect:/posts/" + id;
@@ -146,8 +134,6 @@ public class PostController {
             @PathVariable(name = "commentId") Long commentId,
             @RequestParam(name = "text") String text
     ) {
-        log.info("Editing comment for post with id: {}", id);
-
         postService.editComment(commentId, text);
 
         return "redirect:/posts/" + id;
@@ -158,8 +144,6 @@ public class PostController {
             @PathVariable(name = "id") Long id,
             @PathVariable(name = "commentId") Long commentId
     ) {
-        log.info("Deleting comment for post with id: {}", id);
-
         postService.deleteComment(commentId);
 
         return "redirect:/posts/" + id;
