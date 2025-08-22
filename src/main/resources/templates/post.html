@@ -21,6 +21,8 @@
             newButton.innerHTML = "&#10003;";
             newButton.style="float:right;"
             newComment.parentNode.appendChild(newButton);
+
+            addSubmitOnShortcutListener(newComment);
         }
 
         function addComment(id) {
@@ -39,6 +41,17 @@
             newButton.innerHTML = "&#10003;";
             newButton.style="float:right;"
             form.appendChild(newButton);
+
+            addSubmitOnShortcutListener(newComment);
+        }
+
+        function addSubmitOnShortcutListener(textarea) {
+            textarea.addEventListener('keydown', function(event) {
+                if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+                    event.preventDefault();
+                    textarea.closest("form").submit();
+                }
+            });
         }
     </script>
 </head>
