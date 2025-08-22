@@ -14,8 +14,11 @@ import java.nio.file.Paths;
 @Service
 public class FileService {
 
-    @Value("${file.upload-dir}")
-    private String fileUploadDir;
+    private final String fileUploadDir;
+
+    public FileService(@Value("${file.upload-dir}") String fileUploadDir) {
+        this.fileUploadDir = fileUploadDir;
+    }
 
     public void save(MultipartFile multipartFile) {
         String fileName = multipartFile.getOriginalFilename();

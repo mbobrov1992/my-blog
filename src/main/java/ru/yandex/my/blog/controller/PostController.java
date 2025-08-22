@@ -43,7 +43,7 @@ public class PostController {
         model.addAttribute("search", search);
         model.addAttribute("paging", posts);
 
-        return "posts";
+        return "posts-feed";
     }
 
     @GetMapping("/posts/{id}")
