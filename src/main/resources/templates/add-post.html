@@ -15,7 +15,7 @@
         <tr>
             <td>
                 <h3>Название</h3>
-                <textarea rows="2" style="width: 100%;" name="title" th:text="${post==null ? '' : post.title()}"></textarea>
+                <textarea required rows="2" style="width: 100%;" name="title" th:text="${post==null ? '' : post.title()}"></textarea>
             </td>
         </tr>
         <tr>
@@ -33,7 +33,7 @@
         <tr>
             <td>
                 <h3>Текст</h3>
-                <textarea rows="30" style="width: 100%;" name="text" th:text="${post==null ? '' : post.text()}"></textarea>
+                <textarea required rows="30" style="width: 100%;" name="text" th:text="${post==null ? '' : post.text()}"></textarea>
             </td>
         </tr>
         <tr>
