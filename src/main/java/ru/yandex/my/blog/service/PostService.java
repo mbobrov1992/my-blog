@@ -61,6 +61,8 @@ public class PostService {
         PostEnt postEnt = postRepository.findById(id)
                 .orElseThrow();
 
+        String originalImageName = postEnt.getImageName();
+
         if (request.image() != null && !request.image().isEmpty()) {
             fileService.save(request.image());
             postEnt.setImageName(request.image().getOriginalFilename());
@@ -71,6 +73,16 @@ public class PostService {
         postEnt.setTags(request.tags());
 
         postEnt = postRepository.save(postEnt);
+
+        // удаляем оригинальное изображение если больше не используется
+        if (originalImageName != null
+                && !originalImageName.isEmpty()
+                && request.image() != null
+                && !request.image().isEmpty()
+                && !originalImageName.equals(request.image().getOriginalFilename())
+                && !postRepository.existsByImageName(originalImageName)) {
+            fileService.delete(originalImageName);
+        }
 
         return postMapper.toDto(postEnt);
     }
