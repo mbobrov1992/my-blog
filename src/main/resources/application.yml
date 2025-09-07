@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:5432/my_blog
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+logging:
+  level:
+    root: INFO
+
+file:
+  upload-dir: ${FILE_UPLOAD_DIR:${java.io.tmpdir}}/uploads
