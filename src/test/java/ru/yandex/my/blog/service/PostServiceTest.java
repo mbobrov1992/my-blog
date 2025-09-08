@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import ru.yandex.my.blog.IntegrationTest;
-import ru.yandex.my.blog.config.PostServiceConfiguration;
 import ru.yandex.my.blog.model.dto.PostDto;
 import ru.yandex.my.blog.model.dto.PostRequestDto;
 import ru.yandex.my.blog.model.entity.PostEnt;
@@ -21,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-@SpringJUnitConfig(classes = PostServiceConfiguration.class)
 public class PostServiceTest extends IntegrationTest {
 
     @Autowired

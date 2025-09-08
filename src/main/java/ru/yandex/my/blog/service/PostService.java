@@ -113,7 +113,8 @@ public class PostService {
 
             if (!likes.isEmpty()) {
                 LikeEnt like = likes.getFirst();
-                likeRepository.delete(like);
+                likes.remove(like);
+                postRepository.flush();
             }
         }
     }
